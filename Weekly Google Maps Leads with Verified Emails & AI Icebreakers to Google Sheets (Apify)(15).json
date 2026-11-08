@@ -1,0 +1,3489 @@
+{
+  "name": "Weekly Google Maps Leads with Verified Emails & AI Icebreakers to Google Sheets (Apify)",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"run_mode\": \"both\",\n  \"location (city; state)\": \"Austin, TX\",\n  \"category\": \"Med Spa\",\n  \"max_leads\": 25,\n  \"sheet_document_id\": \"\",\n  \"sheet_name\": \"Sheet1\",\n  \"alert_email\": \"\",\n  \"summaryWebhookURL\": \"\"\n}\n\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        -496
+      ],
+      "id": "eee1b9ba-e926-47fa-b444-5f2432107efb",
+      "name": "Config"
+    },
+    {
+      "parameters": {
+        "operation": "Run actor and get dataset",
+        "actorSource": "store",
+        "actorId": {
+          "__rl": true,
+          "value": "nwua9Gu5YrADL7ZDj",
+          "mode": "list",
+          "cachedResultName": "Google Maps Scraper (compass/crawler-google-places)",
+          "cachedResultUrl": "https://console.apify.com/actors/nwua9Gu5YrADL7ZDj/input"
+        },
+        "actorInputMode": "schema",
+        "actorInput": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "searchStringsArray": "=[\n  \"{{ $('Config').first().json.category }}\"\n] ",
+            "locationQuery": "={{ $('Config').first().json['location (city; state)'] }}",
+            "language": "en",
+            "scrapeSocialMediaProfiles": "{\n  \"facebooks\": false,\n  \"instagrams\": false,\n  \"youtubes\": false,\n  \"tiktoks\": false,\n  \"twitters\": false\n}",
+            "maximumLeadsEnrichmentRecords": 0,
+            "maxCrawledPlacesPerSearch": "={{ Math.min(((parseInt($('Config').first().json.max_leads, 10) > 0 ? parseInt($('Config').first().json.max_leads, 10) : 25) + $('Fetch Existing Sheets Leads').all().filter(r => r.json && (r.json.Website || r.json.website)).length), 2000) }}",
+            "maxCompetitorsToAnalyze": 0
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "searchStringsArray",
+              "displayName": "🔍 Search term(s)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "array",
+              "removed": false,
+              "defaultValue": "[\n  \"restaurant\"\n]"
+            },
+            {
+              "id": "locationQuery",
+              "displayName": "📍 Location (use only one location per run)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "string",
+              "removed": false,
+              "defaultValue": "New York, USA"
+            },
+            {
+              "id": "maxCrawledPlacesPerSearch",
+              "displayName": "💯 Number of places to extract (per each search term or URL)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "number",
+              "removed": false,
+              "defaultValue": 50
+            },
+            {
+              "id": "language",
+              "displayName": "🌍 Language",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "options",
+              "removed": false,
+              "options": [
+                {
+                  "name": "English",
+                  "value": "en"
+                },
+                {
+                  "name": "Afrikaans",
+                  "value": "af"
+                },
+                {
+                  "name": "azərbaycan",
+                  "value": "az"
+                },
+                {
+                  "name": "BahasaIndonesia",
+                  "value": "id"
+                },
+                {
+                  "name": "BahasaMelayu",
+                  "value": "ms"
+                },
+                {
+                  "name": "bosanski",
+                  "value": "bs"
+                },
+                {
+                  "name": "català",
+                  "value": "ca"
+                },
+                {
+                  "name": "Čeština",
+                  "value": "cs"
+                },
+                {
+                  "name": "Dansk",
+                  "value": "da"
+                },
+                {
+                  "name": "Deutsch (Deutschland)",
+                  "value": "de"
+                },
+                {
+                  "name": "eesti",
+                  "value": "et"
+                },
+                {
+                  "name": "Español (España)",
+                  "value": "es"
+                },
+                {
+                  "name": "Español (Latinoamérica)",
+                  "value": "es-419"
+                },
+                {
+                  "name": "euskara",
+                  "value": "eu"
+                },
+                {
+                  "name": "Filipino",
+                  "value": "fil"
+                },
+                {
+                  "name": "Français (France)",
+                  "value": "fr"
+                },
+                {
+                  "name": "galego",
+                  "value": "gl"
+                },
+                {
+                  "name": "Hrvatski",
+                  "value": "hr"
+                },
+                {
+                  "name": "isiZulu",
+                  "value": "zu"
+                },
+                {
+                  "name": "íslenska",
+                  "value": "is"
+                },
+                {
+                  "name": "Italiano",
+                  "value": "it"
+                },
+                {
+                  "name": "Kiswahili",
+                  "value": "sw"
+                },
+                {
+                  "name": "latviešu",
+                  "value": "lv"
+                },
+                {
+                  "name": "lietuvių",
+                  "value": "lt"
+                },
+                {
+                  "name": "magyar",
+                  "value": "hu"
+                },
+                {
+                  "name": "Nederlands",
+                  "value": "nl"
+                },
+                {
+                  "name": "norsk",
+                  "value": "no"
+                },
+                {
+                  "name": "oʻzbekcha",
+                  "value": "uz"
+                },
+                {
+                  "name": "polski",
+                  "value": "pl"
+                },
+                {
+                  "name": "Português (Brasil)",
+                  "value": "pt-BR"
+                },
+                {
+                  "name": "Português (Portugal)",
+                  "value": "pt-PT"
+                },
+                {
+                  "name": "română",
+                  "value": "ro"
+                },
+                {
+                  "name": "shqip",
+                  "value": "sq"
+                },
+                {
+                  "name": "Slovenčina",
+                  "value": "sk"
+                },
+                {
+                  "name": "slovenščina",
+                  "value": "sl"
+                },
+                {
+                  "name": "Suomi",
+                  "value": "fi"
+                },
+                {
+                  "name": "Svenska",
+                  "value": "sv"
+                },
+                {
+                  "name": "TiếngViệt",
+                  "value": "vi"
+                },
+                {
+                  "name": "Türkçe",
+                  "value": "tr"
+                },
+                {
+                  "name": "Ελληνικά",
+                  "value": "el"
+                },
+                {
+                  "name": "български",
+                  "value": "bg"
+                },
+                {
+                  "name": "кыргызча",
+                  "value": "ky"
+                },
+                {
+                  "name": "қазақтілі",
+                  "value": "kk"
+                },
+                {
+                  "name": "македонски",
+                  "value": "mk"
+                },
+                {
+                  "name": "монгол",
+                  "value": "mn"
+                },
+                {
+                  "name": "Русский",
+                  "value": "ru"
+                },
+                {
+                  "name": "српски (ћирилица)",
+                  "value": "sr"
+                },
+                {
+                  "name": "Українська",
+                  "value": "uk"
+                },
+                {
+                  "name": "ქართული",
+                  "value": "ka"
+                },
+                {
+                  "name": "հայերեն",
+                  "value": "hy"
+                },
+                {
+                  "name": "עברית",
+                  "value": "iw"
+                },
+                {
+                  "name": "اردو",
+                  "value": "ur"
+                },
+                {
+                  "name": "العربية",
+                  "value": "ar"
+                },
+                {
+                  "name": "فارسی",
+                  "value": "fa"
+                },
+                {
+                  "name": "አማርኛ",
+                  "value": "am"
+                },
+                {
+                  "name": "नेपाली",
+                  "value": "ne"
+                },
+                {
+                  "name": "हिन्दी",
+                  "value": "hi"
+                },
+                {
+                  "name": "मराठी",
+                  "value": "mr"
+                },
+                {
+                  "name": "বাংলা",
+                  "value": "bn"
+                },
+                {
+                  "name": "ਪੰਜਾਬੀ",
+                  "value": "pa"
+                },
+                {
+                  "name": "ગુજરાતી",
+                  "value": "gu"
+                },
+                {
+                  "name": "தமிழ்",
+                  "value": "ta"
+                },
+                {
+                  "name": "తెలుగు",
+                  "value": "te"
+                },
+                {
+                  "name": "ಕನ್ನಡ",
+                  "value": "kn"
+                },
+                {
+                  "name": "മലയാളം",
+                  "value": "ml"
+                },
+                {
+                  "name": "සිංහල",
+                  "value": "si"
+                },
+                {
+                  "name": "ไทย",
+                  "value": "th"
+                },
+                {
+                  "name": "ລາວ",
+                  "value": "lo"
+                },
+                {
+                  "name": "ဗမာ",
+                  "value": "my"
+                },
+                {
+                  "name": "ខ្មែរ",
+                  "value": "km"
+                },
+                {
+                  "name": "한국어",
+                  "value": "ko"
+                },
+                {
+                  "name": "日本語",
+                  "value": "ja"
+                },
+                {
+                  "name": "简体中文",
+                  "value": "zh-CN"
+                },
+                {
+                  "name": "繁體中文",
+                  "value": "zh-TW"
+                }
+              ],
+              "defaultValue": "en"
+            },
+            {
+              "id": "categoryFilterWords",
+              "displayName": "🎢 Place categories ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "array",
+              "removed": true
+            },
+            {
+              "id": "searchMatching",
+              "displayName": "Get exact name matches (no similar results) ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "options",
+              "removed": true,
+              "options": [
+                {
+                  "name": "Scrape all places as provided by Google",
+                  "value": "all"
+                },
+                {
+                  "name": "Scrape only places that include the search term in their title",
+                  "value": "only_includes"
+                },
+                {
+                  "name": "Scrape only places that match the search term exactly with their title",
+                  "value": "only_exact"
+                }
+              ]
+            },
+            {
+              "id": "placeMinimumStars",
+              "displayName": "Set a minimum star rating ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "options",
+              "removed": true,
+              "options": [
+                {
+                  "name": "All",
+                  "value": ""
+                },
+                {
+                  "name": "⭐️ 2+ star",
+                  "value": "two"
+                },
+                {
+                  "name": "⭐️ 2.5+ stars",
+                  "value": "twoAndHalf"
+                },
+                {
+                  "name": "⭐️ 3+ stars",
+                  "value": "three"
+                },
+                {
+                  "name": "⭐️ 3.5+ stars",
+                  "value": "threeAndHalf"
+                },
+                {
+                  "name": "⭐️ 4+ stars",
+                  "value": "four"
+                },
+                {
+                  "name": "⭐️ 4.5+ stars",
+                  "value": "fourAndHalf"
+                }
+              ]
+            },
+            {
+              "id": "website",
+              "displayName": "Scrape places with/without a website ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "options",
+              "removed": true,
+              "options": [
+                {
+                  "name": "Scrape all places",
+                  "value": "allPlaces"
+                },
+                {
+                  "name": "Scrape only places with a website",
+                  "value": "withWebsite"
+                },
+                {
+                  "name": "Scrape only places without a website",
+                  "value": "withoutWebsite"
+                }
+              ]
+            },
+            {
+              "id": "skipClosedPlaces",
+              "displayName": "⏩ Skip closed places ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "scrapePlaceDetailPage",
+              "displayName": "Scrape place detail page ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "scrapeTableReservationProvider",
+              "displayName": "Scrape table reservation provider data ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "scrapeOrderOnline",
+              "displayName": "🛵 Scrape order online widget data ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "includeWebResults",
+              "displayName": "🌐 Include \"Web results\" ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "scrapeDirectories",
+              "displayName": "🛍 Scrape inside places (e.g. malls or shopping center) ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "maxQuestions",
+              "displayName": "Number of questions to extract ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "number",
+              "removed": true
+            },
+            {
+              "id": "scrapeContacts",
+              "displayName": "⏩ Add-on: Company contacts enrichment (from website) ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "scrapeSocialMediaProfiles",
+              "displayName": "🔍 Add-on: Social media profile enrichment ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "object",
+              "removed": false,
+              "defaultValue": "{\n  \"facebooks\": false,\n  \"instagrams\": false,\n  \"youtubes\": false,\n  \"tiktoks\": false,\n  \"twitters\": false\n}"
+            },
+            {
+              "id": "maximumLeadsEnrichmentRecords",
+              "displayName": "⏩ Add-on: Extract business leads information - Maximum leads per place ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "number",
+              "removed": false,
+              "defaultValue": 0
+            },
+            {
+              "id": "leadsEnrichmentDepartments",
+              "displayName": "Leads departments selection",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "array",
+              "removed": true
+            },
+            {
+              "id": "verifyLeadsEnrichmentEmails",
+              "displayName": "⏩ Add-on: Email verification ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "maxReviews",
+              "displayName": "Number of reviews to extract ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "number",
+              "removed": true
+            },
+            {
+              "id": "reviewsStartDate",
+              "displayName": "Only scrape reviews newer than [date]",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "reviewsSort",
+              "displayName": "Sort reviews by",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "options",
+              "removed": true,
+              "options": [
+                {
+                  "name": "Newest",
+                  "value": "newest"
+                },
+                {
+                  "name": "Most relevant",
+                  "value": "mostRelevant"
+                },
+                {
+                  "name": "Highest ranking",
+                  "value": "highestRanking"
+                },
+                {
+                  "name": "Lowest ranking",
+                  "value": "lowestRanking"
+                }
+              ]
+            },
+            {
+              "id": "reviewsFilterString",
+              "displayName": "Filter reviews by keywords",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "reviewsOrigin",
+              "displayName": "Reviews origin",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "options",
+              "removed": true,
+              "options": [
+                {
+                  "name": "All reviews",
+                  "value": "all"
+                },
+                {
+                  "name": "Google",
+                  "value": "google"
+                }
+              ]
+            },
+            {
+              "id": "scrapeReviewsPersonalData",
+              "displayName": "🧛‍♂️ Include reviewers' data",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "maxImages",
+              "displayName": "Number of additional images to extract ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "number",
+              "removed": true
+            },
+            {
+              "id": "scrapeImageAuthors",
+              "displayName": "🧑‍🎨 Include the image authors",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "enableCompetitorAnalysis",
+              "displayName": "Enable competitor analysis ($)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "maxCompetitorsToAnalyze",
+              "displayName": "Max competitors to analyze",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "number",
+              "removed": false,
+              "defaultValue": 30
+            },
+            {
+              "id": "countryCode",
+              "displayName": "🗺 Country",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "options",
+              "removed": true,
+              "options": [
+                {
+                  "name": "",
+                  "value": ""
+                },
+                {
+                  "name": "United States",
+                  "value": "us"
+                },
+                {
+                  "name": "Afghanistan",
+                  "value": "af"
+                },
+                {
+                  "name": "Albania",
+                  "value": "al"
+                },
+                {
+                  "name": "Algeria",
+                  "value": "dz"
+                },
+                {
+                  "name": "American Samoa",
+                  "value": "as"
+                },
+                {
+                  "name": "Andorra",
+                  "value": "ad"
+                },
+                {
+                  "name": "Angola",
+                  "value": "ao"
+                },
+                {
+                  "name": "Anguilla",
+                  "value": "ai"
+                },
+                {
+                  "name": "Antarctica",
+                  "value": "aq"
+                },
+                {
+                  "name": "Antigua and Barbuda",
+                  "value": "ag"
+                },
+                {
+                  "name": "Argentina",
+                  "value": "ar"
+                },
+                {
+                  "name": "Armenia",
+                  "value": "am"
+                },
+                {
+                  "name": "Aruba",
+                  "value": "aw"
+                },
+                {
+                  "name": "Australia",
+                  "value": "au"
+                },
+                {
+                  "name": "Austria",
+                  "value": "at"
+                },
+                {
+                  "name": "Azerbaijan",
+                  "value": "az"
+                },
+                {
+                  "name": "Bahamas",
+                  "value": "bs"
+                },
+                {
+                  "name": "Bahrain",
+                  "value": "bh"
+                },
+                {
+                  "name": "Bangladesh",
+                  "value": "bd"
+                },
+                {
+                  "name": "Barbados",
+                  "value": "bb"
+                },
+                {
+                  "name": "Belarus",
+                  "value": "by"
+                },
+                {
+                  "name": "Belgium",
+                  "value": "be"
+                },
+                {
+                  "name": "Belize",
+                  "value": "bz"
+                },
+                {
+                  "name": "Benin",
+                  "value": "bj"
+                },
+                {
+                  "name": "Bermuda",
+                  "value": "bm"
+                },
+                {
+                  "name": "Bhutan",
+                  "value": "bt"
+                },
+                {
+                  "name": "Bolivia",
+                  "value": "bo"
+                },
+                {
+                  "name": "Bosnia and Herzegovina",
+                  "value": "ba"
+                },
+                {
+                  "name": "Botswana",
+                  "value": "bw"
+                },
+                {
+                  "name": "Bouvet Island",
+                  "value": "bv"
+                },
+                {
+                  "name": "Brazil",
+                  "value": "br"
+                },
+                {
+                  "name": "British Indian Ocean Territory",
+                  "value": "io"
+                },
+                {
+                  "name": "Brunei Darussalam",
+                  "value": "bn"
+                },
+                {
+                  "name": "Bulgaria",
+                  "value": "bg"
+                },
+                {
+                  "name": "Burkina Faso",
+                  "value": "bf"
+                },
+                {
+                  "name": "Burundi",
+                  "value": "bi"
+                },
+                {
+                  "name": "Cambodia",
+                  "value": "kh"
+                },
+                {
+                  "name": "Cameroon",
+                  "value": "cm"
+                },
+                {
+                  "name": "Canada",
+                  "value": "ca"
+                },
+                {
+                  "name": "Cape Verde",
+                  "value": "cv"
+                },
+                {
+                  "name": "Cayman Islands",
+                  "value": "ky"
+                },
+                {
+                  "name": "Central African Republic",
+                  "value": "cf"
+                },
+                {
+                  "name": "Chad",
+                  "value": "td"
+                },
+                {
+                  "name": "Chile",
+                  "value": "cl"
+                },
+                {
+                  "name": "China",
+                  "value": "cn"
+                },
+                {
+                  "name": "Christmas Island",
+                  "value": "cx"
+                },
+                {
+                  "name": "Cocos (Keeling) Islands",
+                  "value": "cc"
+                },
+                {
+                  "name": "Colombia",
+                  "value": "co"
+                },
+                {
+                  "name": "Comoros",
+                  "value": "km"
+                },
+                {
+                  "name": "Congo-Brazzaville",
+                  "value": "cg"
+                },
+                {
+                  "name": "Congo, Democratic Republic of the",
+                  "value": "cd"
+                },
+                {
+                  "name": "Cook Islands",
+                  "value": "ck"
+                },
+                {
+                  "name": "Costa Rica",
+                  "value": "cr"
+                },
+                {
+                  "name": "Cote D'ivoire",
+                  "value": "ci"
+                },
+                {
+                  "name": "Croatia",
+                  "value": "hr"
+                },
+                {
+                  "name": "Cuba",
+                  "value": "cu"
+                },
+                {
+                  "name": "Cyprus",
+                  "value": "cy"
+                },
+                {
+                  "name": "Czech Republic",
+                  "value": "cz"
+                },
+                {
+                  "name": "Denmark",
+                  "value": "dk"
+                },
+                {
+                  "name": "Djibouti",
+                  "value": "dj"
+                },
+                {
+                  "name": "Dominica",
+                  "value": "dm"
+                },
+                {
+                  "name": "Dominican Republic",
+                  "value": "do"
+                },
+                {
+                  "name": "Ecuador",
+                  "value": "ec"
+                },
+                {
+                  "name": "Egypt",
+                  "value": "eg"
+                },
+                {
+                  "name": "El Salvador",
+                  "value": "sv"
+                },
+                {
+                  "name": "Equatorial Guinea",
+                  "value": "gq"
+                },
+                {
+                  "name": "Eritrea",
+                  "value": "er"
+                },
+                {
+                  "name": "Estonia",
+                  "value": "ee"
+                },
+                {
+                  "name": "Ethiopia",
+                  "value": "et"
+                },
+                {
+                  "name": "Falkland Islands",
+                  "value": "fk"
+                },
+                {
+                  "name": "Faroe Islands",
+                  "value": "fo"
+                },
+                {
+                  "name": "Fiji",
+                  "value": "fj"
+                },
+                {
+                  "name": "Finland",
+                  "value": "fi"
+                },
+                {
+                  "name": "France",
+                  "value": "fr"
+                },
+                {
+                  "name": "French Guiana",
+                  "value": "gf"
+                },
+                {
+                  "name": "French Polynesia",
+                  "value": "pf"
+                },
+                {
+                  "name": "French Southern Territories",
+                  "value": "tf"
+                },
+                {
+                  "name": "Gabon",
+                  "value": "ga"
+                },
+                {
+                  "name": "Gambia",
+                  "value": "gm"
+                },
+                {
+                  "name": "Georgia",
+                  "value": "ge"
+                },
+                {
+                  "name": "Germany",
+                  "value": "de"
+                },
+                {
+                  "name": "Ghana",
+                  "value": "gh"
+                },
+                {
+                  "name": "Gibraltar",
+                  "value": "gi"
+                },
+                {
+                  "name": "Greece",
+                  "value": "gr"
+                },
+                {
+                  "name": "Greenland",
+                  "value": "gl"
+                },
+                {
+                  "name": "Grenada",
+                  "value": "gd"
+                },
+                {
+                  "name": "Guadeloupe",
+                  "value": "gp"
+                },
+                {
+                  "name": "Guam",
+                  "value": "gu"
+                },
+                {
+                  "name": "Guatemala",
+                  "value": "gt"
+                },
+                {
+                  "name": "Guinea",
+                  "value": "gn"
+                },
+                {
+                  "name": "Guinea-Bissau",
+                  "value": "gw"
+                },
+                {
+                  "name": "Guyana",
+                  "value": "gy"
+                },
+                {
+                  "name": "Haiti",
+                  "value": "ht"
+                },
+                {
+                  "name": "Heard Island and Mcdonald Islands",
+                  "value": "hm"
+                },
+                {
+                  "name": "Vatican City State",
+                  "value": "va"
+                },
+                {
+                  "name": "Honduras",
+                  "value": "hn"
+                },
+                {
+                  "name": "Hungary",
+                  "value": "hu"
+                },
+                {
+                  "name": "Iceland",
+                  "value": "is"
+                },
+                {
+                  "name": "India",
+                  "value": "in"
+                },
+                {
+                  "name": "Indonesia",
+                  "value": "id"
+                },
+                {
+                  "name": "Iran",
+                  "value": "ir"
+                },
+                {
+                  "name": "Iraq",
+                  "value": "iq"
+                },
+                {
+                  "name": "Ireland",
+                  "value": "ie"
+                },
+                {
+                  "name": "Israel",
+                  "value": "il"
+                },
+                {
+                  "name": "Italy",
+                  "value": "it"
+                },
+                {
+                  "name": "Jamaica",
+                  "value": "jm"
+                },
+                {
+                  "name": "Japan",
+                  "value": "jp"
+                },
+                {
+                  "name": "Jordan",
+                  "value": "jo"
+                },
+                {
+                  "name": "Kazakhstan",
+                  "value": "kz"
+                },
+                {
+                  "name": "Kenya",
+                  "value": "ke"
+                },
+                {
+                  "name": "Kiribati",
+                  "value": "ki"
+                },
+                {
+                  "name": "Korea, Democratic People's Republic of",
+                  "value": "kp"
+                },
+                {
+                  "name": "Korea",
+                  "value": "kr"
+                },
+                {
+                  "name": "Kuwait",
+                  "value": "kw"
+                },
+                {
+                  "name": "Kyrgyzstan",
+                  "value": "kg"
+                },
+                {
+                  "name": "Laos",
+                  "value": "la"
+                },
+                {
+                  "name": "Latvia",
+                  "value": "lv"
+                },
+                {
+                  "name": "Lebanon",
+                  "value": "lb"
+                },
+                {
+                  "name": "Lesotho",
+                  "value": "ls"
+                },
+                {
+                  "name": "Liberia",
+                  "value": "lr"
+                },
+                {
+                  "name": "Libyan Arab Jamahiriya",
+                  "value": "ly"
+                },
+                {
+                  "name": "Liechtenstein",
+                  "value": "li"
+                },
+                {
+                  "name": "Lithuania",
+                  "value": "lt"
+                },
+                {
+                  "name": "Luxembourg",
+                  "value": "lu"
+                },
+                {
+                  "name": "Macao",
+                  "value": "mo"
+                },
+                {
+                  "name": "Macedonia",
+                  "value": "mk"
+                },
+                {
+                  "name": "Madagascar",
+                  "value": "mg"
+                },
+                {
+                  "name": "Malawi",
+                  "value": "mw"
+                },
+                {
+                  "name": "Malaysia",
+                  "value": "my"
+                },
+                {
+                  "name": "Maldives",
+                  "value": "mv"
+                },
+                {
+                  "name": "Mali",
+                  "value": "ml"
+                },
+                {
+                  "name": "Malta",
+                  "value": "mt"
+                },
+                {
+                  "name": "Marshall Islands",
+                  "value": "mh"
+                },
+                {
+                  "name": "Martinique",
+                  "value": "mq"
+                },
+                {
+                  "name": "Mauritania",
+                  "value": "mr"
+                },
+                {
+                  "name": "Mauritius",
+                  "value": "mu"
+                },
+                {
+                  "name": "Mayotte",
+                  "value": "yt"
+                },
+                {
+                  "name": "Mexico",
+                  "value": "mx"
+                },
+                {
+                  "name": "Micronesia",
+                  "value": "fm"
+                },
+                {
+                  "name": "Moldova",
+                  "value": "md"
+                },
+                {
+                  "name": "Monaco",
+                  "value": "mc"
+                },
+                {
+                  "name": "Mongolia",
+                  "value": "mn"
+                },
+                {
+                  "name": "Montenegro",
+                  "value": "me"
+                },
+                {
+                  "name": "Montserrat",
+                  "value": "ms"
+                },
+                {
+                  "name": "Morocco",
+                  "value": "ma"
+                },
+                {
+                  "name": "Mozambique",
+                  "value": "mz"
+                },
+                {
+                  "name": "Myanmar",
+                  "value": "mm"
+                },
+                {
+                  "name": "Namibia",
+                  "value": "na"
+                },
+                {
+                  "name": "Nauru",
+                  "value": "nr"
+                },
+                {
+                  "name": "Nepal",
+                  "value": "np"
+                },
+                {
+                  "name": "Netherlands",
+                  "value": "nl"
+                },
+                {
+                  "name": "Netherlands Antilles",
+                  "value": "an"
+                },
+                {
+                  "name": "New Caledonia",
+                  "value": "nc"
+                },
+                {
+                  "name": "New Zealand",
+                  "value": "nz"
+                },
+                {
+                  "name": "Nicaragua",
+                  "value": "ni"
+                },
+                {
+                  "name": "Niger",
+                  "value": "ne"
+                },
+                {
+                  "name": "Nigeria",
+                  "value": "ng"
+                },
+                {
+                  "name": "Niue",
+                  "value": "nu"
+                },
+                {
+                  "name": "Norfolk Island",
+                  "value": "nf"
+                },
+                {
+                  "name": "Northern Mariana Islands",
+                  "value": "mp"
+                },
+                {
+                  "name": "Norway",
+                  "value": "no"
+                },
+                {
+                  "name": "Oman",
+                  "value": "om"
+                },
+                {
+                  "name": "Pakistan",
+                  "value": "pk"
+                },
+                {
+                  "name": "Palau",
+                  "value": "pw"
+                },
+                {
+                  "name": "Palestine",
+                  "value": "ps"
+                },
+                {
+                  "name": "Panama",
+                  "value": "pa"
+                },
+                {
+                  "name": "Papua New Guinea",
+                  "value": "pg"
+                },
+                {
+                  "name": "Paraguay",
+                  "value": "py"
+                },
+                {
+                  "name": "Peru",
+                  "value": "pe"
+                },
+                {
+                  "name": "Philippines",
+                  "value": "ph"
+                },
+                {
+                  "name": "Pitcairn",
+                  "value": "pn"
+                },
+                {
+                  "name": "Poland",
+                  "value": "pl"
+                },
+                {
+                  "name": "Portugal",
+                  "value": "pt"
+                },
+                {
+                  "name": "Puerto Rico",
+                  "value": "pr"
+                },
+                {
+                  "name": "Qatar",
+                  "value": "qa"
+                },
+                {
+                  "name": "Reunion",
+                  "value": "re"
+                },
+                {
+                  "name": "Romania",
+                  "value": "ro"
+                },
+                {
+                  "name": "Russian Federation",
+                  "value": "ru"
+                },
+                {
+                  "name": "Rwanda",
+                  "value": "rw"
+                },
+                {
+                  "name": "Saint Helena",
+                  "value": "sh"
+                },
+                {
+                  "name": "Saint Kitts and Nevis",
+                  "value": "kn"
+                },
+                {
+                  "name": "Saint Lucia",
+                  "value": "lc"
+                },
+                {
+                  "name": "Saint Pierre and Miquelon",
+                  "value": "pm"
+                },
+                {
+                  "name": "Saint Vincent and the Grenadines",
+                  "value": "vc"
+                },
+                {
+                  "name": "Samoa",
+                  "value": "ws"
+                },
+                {
+                  "name": "San Marino",
+                  "value": "sm"
+                },
+                {
+                  "name": "Sao Tome and Principe",
+                  "value": "st"
+                },
+                {
+                  "name": "Saudi Arabia",
+                  "value": "sa"
+                },
+                {
+                  "name": "Senegal",
+                  "value": "sn"
+                },
+                {
+                  "name": "Serbia",
+                  "value": "rs"
+                },
+                {
+                  "name": "Seychelles",
+                  "value": "sc"
+                },
+                {
+                  "name": "Sierra Leone",
+                  "value": "sl"
+                },
+                {
+                  "name": "Singapore",
+                  "value": "sg"
+                },
+                {
+                  "name": "Slovakia",
+                  "value": "sk"
+                },
+                {
+                  "name": "Slovenia",
+                  "value": "si"
+                },
+                {
+                  "name": "Solomon Islands",
+                  "value": "sb"
+                },
+                {
+                  "name": "Somalia",
+                  "value": "so"
+                },
+                {
+                  "name": "South Africa",
+                  "value": "za"
+                },
+                {
+                  "name": "South Georgia and the South Sandwich Islands",
+                  "value": "gs"
+                },
+                {
+                  "name": "South Sudan",
+                  "value": "ss"
+                },
+                {
+                  "name": "Spain",
+                  "value": "es"
+                },
+                {
+                  "name": "Sri Lanka",
+                  "value": "lk"
+                },
+                {
+                  "name": "Sudan",
+                  "value": "sd"
+                },
+                {
+                  "name": "Suriname",
+                  "value": "sr"
+                },
+                {
+                  "name": "Svalbard and Jan Mayen",
+                  "value": "sj"
+                },
+                {
+                  "name": "Swaziland",
+                  "value": "sz"
+                },
+                {
+                  "name": "Sweden",
+                  "value": "se"
+                },
+                {
+                  "name": "Switzerland",
+                  "value": "ch"
+                },
+                {
+                  "name": "Syrian Arab Republic",
+                  "value": "sy"
+                },
+                {
+                  "name": "Taiwan",
+                  "value": "tw"
+                },
+                {
+                  "name": "Tajikistan",
+                  "value": "tj"
+                },
+                {
+                  "name": "Tanzania",
+                  "value": "tz"
+                },
+                {
+                  "name": "Thailand",
+                  "value": "th"
+                },
+                {
+                  "name": "Timor-Leste",
+                  "value": "tl"
+                },
+                {
+                  "name": "Togo",
+                  "value": "tg"
+                },
+                {
+                  "name": "Tokelau",
+                  "value": "tk"
+                },
+                {
+                  "name": "Tonga",
+                  "value": "to"
+                },
+                {
+                  "name": "Trinidad and Tobago",
+                  "value": "tt"
+                },
+                {
+                  "name": "Tunisia",
+                  "value": "tn"
+                },
+                {
+                  "name": "Turkey",
+                  "value": "tr"
+                },
+                {
+                  "name": "Turkmenistan",
+                  "value": "tm"
+                },
+                {
+                  "name": "Turks and Caicos Islands",
+                  "value": "tc"
+                },
+                {
+                  "name": "Tuvalu",
+                  "value": "tv"
+                },
+                {
+                  "name": "Uganda",
+                  "value": "ug"
+                },
+                {
+                  "name": "Ukraine",
+                  "value": "ua"
+                },
+                {
+                  "name": "United Arab Emirates",
+                  "value": "ae"
+                },
+                {
+                  "name": "United Kingdom",
+                  "value": "gb"
+                },
+                {
+                  "name": "United States Minor Outlying Islands",
+                  "value": "um"
+                },
+                {
+                  "name": "Uruguay",
+                  "value": "uy"
+                },
+                {
+                  "name": "Uzbekistan",
+                  "value": "uz"
+                },
+                {
+                  "name": "Vanuatu",
+                  "value": "vu"
+                },
+                {
+                  "name": "Venezuela",
+                  "value": "ve"
+                },
+                {
+                  "name": "Viet Nam",
+                  "value": "vn"
+                },
+                {
+                  "name": "Virgin Islands, British",
+                  "value": "vg"
+                },
+                {
+                  "name": "Virgin Islands, U.S.",
+                  "value": "vi"
+                },
+                {
+                  "name": "Wallis and Futuna",
+                  "value": "wf"
+                },
+                {
+                  "name": "Western Sahara",
+                  "value": "eh"
+                },
+                {
+                  "name": "Yemen",
+                  "value": "ye"
+                },
+                {
+                  "name": "Zambia",
+                  "value": "zm"
+                },
+                {
+                  "name": "Zimbabwe",
+                  "value": "zw"
+                }
+              ]
+            },
+            {
+              "id": "city",
+              "displayName": "🌇 City",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "state",
+              "displayName": "State",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "county",
+              "displayName": "County",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "postalCode",
+              "displayName": "Postal code",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "customGeolocation",
+              "displayName": "🛰 Custom search area (coordinate order must be: [↕ longitude, ↔ latitude])",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "object",
+              "removed": true
+            },
+            {
+              "id": "startUrls",
+              "displayName": "Google Maps URLs",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "array",
+              "removed": true
+            },
+            {
+              "id": "placeIds",
+              "displayName": "🗃 Place IDs",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "array",
+              "removed": true
+            },
+            {
+              "id": "allPlacesNoSearchAction",
+              "displayName": "Scrape all places",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "options",
+              "removed": true,
+              "options": [
+                {
+                  "name": "Not applied (normal search or direct places)",
+                  "value": ""
+                },
+                {
+                  "name": "Scrape all places visible on the map (ignore search terms)",
+                  "value": "all_places_no_search_ocr"
+                },
+                {
+                  "name": "DEPRECATED: Scrape by Moving mouse (very slow)",
+                  "value": "all_places_no_search_mouse"
+                }
+              ]
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "timeout": {},
+        "maxTotalChargeUsd": {}
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 2,
+      "position": [
+        896,
+        -480
+      ],
+      "id": "83ee9e02-7a5c-414b-9437-7e16b5b2fe37",
+      "name": "Scrape Google Maps",
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "apifyApi": {
+          "id": "sXeYsMuEq5C34Eb7",
+          "name": "Apify account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2e3d54a5-edbb-43cb-b66c-25d67ab0154c",
+              "leftValue": "={{ $json.website }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        1120,
+        -480
+      ],
+      "id": "34866e21-db6e-49e4-9e52-7627965d30b7",
+      "name": "Filter: Has Website?",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const cfg = $('Config').first().json;\nconst runMode = String(cfg.run_mode || 'both').trim().toLowerCase();\nconst parsedMax = parseInt(cfg.max_leads, 10);\nconst rawMax = Number.isFinite(parsedMax) && parsedMax > 0 ? parsedMax : 25;\nconst clampedNewMax = Math.min(rawMax, 2000);\nconst HARD_BATCH_CAP = 2000;\nconst clampNote = rawMax > 2000 ? ` (Clamped from ${rawMax} to 2,000 max safety limit)` : '';\n\nconst normalizeDomain = (url) => String(url || '').trim().toLowerCase().replace(/^https?:\\/\\/(www\\.)?/, '').split(/[/?#:]/)[0];\nconst socialBlocked = [\n  'facebook.com', 'instagram.com', 'yelp.com', 'linktr.ee', 'tiktok.com',\n  'google.com', 'goo.gl', 'squareup.com', 'vagaro.com', 'heygoldie.com', 'skinclique.com'\n];\nconst isBlockedDomain = (dom) => socialBlocked.some(b => dom === b || dom.endsWith('.' + b));\nconst hasRealValue = (v) => Boolean(v && String(v).trim() !== '' && String(v).trim() !== 'None');\n\nconst seenDomains = new Set();\nconst sheetDomains = new Set();\nconst queuedExistingDomains = new Set();\nconst validLeads = [];\nconst sheetLeadMap = {};\nlet skippedExisting = 0;\nlet existingQueuedCount = 0;\nlet newMapsQueuedCount = 0;\n\n// 1. Queue un-enriched rows from Google Sheet (and group multi-location sheet chains by domain)\nconst existingRows = $('Fetch Existing Sheets Leads').all();\nfor (const row of existingRows) {\n  const r = row.json || {};\n  const rawWeb = String(r.Website || r.website || r.Domain || r.domain || '').trim();\n  if (!rawWeb) continue;\n\n  const webUrl = rawWeb.startsWith('http') ? rawWeb : `https://${rawWeb}`;\n  const dom = normalizeDomain(webUrl);\n  if (!dom || !dom.includes('.') || isBlockedDomain(dom)) continue;\n\n  // Only treat as enriched if an actual contact/enrichment field was found (not fallback Intent_Tier/Icebreaker)\n  const isAlreadyEnriched = Boolean(\n  (r.Verified_Email && String(r.Verified_Email).includes('@')) ||\n  hasRealValue(r.Decision_Maker) ||\n  hasRealValue(r.LinkedIn_Profile) ||\n  hasRealValue(r.Contact_Form_URL) ||\n  hasRealValue(r.Instagram_URL) ||\n  (!cfg.retry_empty_leads && (hasRealValue(r.Intent_Tier) || hasRealValue(r.Cold_Email_Icebreaker)))\n);\n\n  seenDomains.add(dom);\n  sheetDomains.add(dom);\n  if (isAlreadyEnriched || runMode === 'scrape_new') {\n    continue;\n  }\n\n  const rowTitle = String(r.Company_Name || r.Company || r.title || r.name || '').trim();\n  const rowCity = String(r.city || (r.City_State || '').split(',')[0] || '').trim();\n  const rowState = String(r.state || (r.City_State || '').split(',')[1] || '').trim();\n  const rowCityState = String(r.City_State || [rowCity, rowState].filter(Boolean).join(', ') || '').trim();\n  const rowPhone = String(r.Phone || r.phone || '').trim();\n\n  if (!sheetLeadMap[dom]) sheetLeadMap[dom] = [];\n  sheetLeadMap[dom].push({\n    originalWebsite: rawWeb,\n    Company_Name: rowTitle,\n    Phone: rowPhone,\n    City_State: rowCityState\n  });\n\n  if (!queuedExistingDomains.has(dom) && validLeads.length < HARD_BATCH_CAP) {\n    queuedExistingDomains.add(dom);\n    validLeads.push({\n      website: webUrl,\n      title: rowTitle,\n      city: rowCity,\n      state: rowState,\n      phone: rowPhone\n    });\n    existingQueuedCount++;\n  }\n}\n\nconst suppressedPreCount = seenDomains.size - existingQueuedCount;\n\n// 2. In 'scrape_new' or 'both' mode, add up to clampedNewMax NEW Google Maps leads on top\nconst mapsItems = (runMode !== 'enrich_existing' && $('Filter: Has Website?').isExecuted)\n  ? $('Filter: Has Website?').all()\n  : [];\n\nif (runMode !== 'enrich_existing') {\n  for (const item of mapsItems) {\n    if (newMapsQueuedCount >= clampedNewMax || validLeads.length >= HARD_BATCH_CAP) break;\n    const d = item.json || {};\n    const web = String(d.website || '').trim();\n    if (!web || !web.startsWith('http')) continue;\n    const dom = normalizeDomain(web);\n    if (!dom || !dom.includes('.') || isBlockedDomain(dom)) continue;\n\n    const mTitle = String(d.title || d.name || '').trim();\n    const mPhone = String(d.phone || d.phoneUnformatted || '').trim();\n    const mCityState = [d.city, d.state].filter(Boolean).join(', ');\n\n    if (seenDomains.has(dom)) {\n      // Only fan out multi-location branches if the domain came from Maps in this run (never add ghost URLs to existing sheet domains)\n      if (!sheetDomains.has(dom) && sheetLeadMap[dom] && !sheetLeadMap[dom].some(x => x.Phone === mPhone && x.Company_Name === mTitle)) {\n        sheetLeadMap[dom].push({\n          originalWebsite: web,\n          Company_Name: mTitle,\n          Phone: mPhone,\n          City_State: mCityState\n        });\n      } else {\n        skippedExisting++;\n      }\n      continue;\n    }\n\n    seenDomains.add(dom);\n    sheetLeadMap[dom] = [{\n      originalWebsite: web,\n      Company_Name: mTitle,\n      Phone: mPhone,\n      City_State: mCityState\n    }];\n    validLeads.push({\n      website: web,\n      title: mTitle,\n      city: d.city || '',\n      state: d.state || '',\n      phone: mPhone\n    });\n    newMapsQueuedCount++;\n  }\n}\n\nreturn [{\n  json: {\n    leads: validLeads,\n    maxLeads: validLeads.length,\n    existingQueuedCount,\n    newMapsQueuedCount,\n    skippedExisting,\n    suppressedPreCount,\n    sheetLeadMap,\n    runMode,\n    clampedMax: clampedNewMax,\n    clampNote,\n    mapsRawCount: mapsItems.length,\n    clientLedger: cfg.clientLedger || 'weekly_gmaps_master'\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1344,
+        -496
+      ],
+      "id": "c2a51f8f-1b95-4b91-83b2-04829d494d90",
+      "name": "Filter, Clamp, & Suppress existing domains"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f2be965c-5026-4b84-bba9-ca229e4e2a2c",
+              "leftValue": "={{ $json.maxLeads }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1568,
+        -496
+      ],
+      "id": "d688afed-b130-49bf-b1f3-a3727a4dcefc",
+      "name": "Any new domains to enrich?"
+    },
+    {
+      "parameters": {
+        "operation": "Run actor and get dataset",
+        "actorId": {
+          "__rl": true,
+          "value": "LMN0mjASHvPrNSsTJ",
+          "mode": "list",
+          "cachedResultName": "B2B Website Decision Maker, LinkedIn & Email Enricher (amitabh_312/b2b-website-decision-maker-email-enricher)",
+          "cachedResultUrl": "https://console.apify.com/actors/LMN0mjASHvPrNSsTJ/input"
+        },
+        "actorInputMode": "schema",
+        "actorInput": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "maxLeads": "={{ $json.maxLeads }}",
+            "leads": "={{ $json.leads }}",
+            "deduplicateAcrossRuns": "={{ false }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "urls",
+              "displayName": "1. Website URLs or Domains to Enrich",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "array",
+              "removed": true,
+              "defaultValue": "[\n  \"https://onyxcoffeelab.com\",\n  \"https://www.castlehillfitness.com\",\n  \"https://www.austindentalcare.com\"\n]"
+            },
+            {
+              "id": "datasetId",
+              "displayName": "2. Apify Dataset ID (1-Click Google Maps / Directory Chaining)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "leads",
+              "displayName": "3. Webhook Lead Objects Array (Clay.com / Make / n8n)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "array",
+              "removed": false
+            },
+            {
+              "id": "maxLeads",
+              "displayName": "Maximum Domains to Enrich",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "number",
+              "removed": false,
+              "defaultValue": 25
+            },
+            {
+              "id": "requireDecisionMaker",
+              "displayName": "Require Verified Decision Maker Name",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "requireEmail",
+              "displayName": "Require Verified Email Address",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "requirePhone",
+              "displayName": "Require Verified Phone Number",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": true
+            },
+            {
+              "id": "deduplicateAcrossRuns",
+              "displayName": "Deduplicate Leads Across Runs (Vault Suppression)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "boolean",
+              "removed": false
+            },
+            {
+              "id": "clientLedger",
+              "displayName": "Client / Campaign Vault Name (Optional)",
+              "defaultMatch": false,
+              "required": false,
+              "display": true,
+              "type": "string",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "timeout": 1800,
+        "memory": 512,
+        "maxTotalChargeUsd": {}
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        -432
+      ],
+      "id": "1f47e425-9847-4166-8fc4-d0b5f06ac59e",
+      "name": "Enrich Leads",
+      "retryOnFail": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "apifyApi": {
+          "id": "sXeYsMuEq5C34Eb7",
+          "name": "Apify account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const batchMeta = $('Filter, Clamp, & Suppress existing domains').first().json;\nconst cfg = $('Config').first().json;\nconst sheetMap = batchMeta.sheetLeadMap || {};\nconst normalizeDomain = (url) => String(url || '').trim().toLowerCase().replace(/^https?:\\/\\/(www\\.)?/, '').split(/[/?#:]/)[0];\nconst items = $input.all().map(i => i.json).filter(r => r && (r.Company_Name || r.Website));\n\nconst AD_SIGNALS = ['Meta Pixel', 'Google Ads', 'TikTok Pixel'];\nconst seen = new Set();\nconst deduped = [];\n\nfor (const r of items) {\n  const dom = normalizeDomain(r.Website || '');\n  if (!dom || dom === 'google.com' || !sheetMap[dom]) continue;\n\n  const rawEntry = sheetMap[dom];\n  const locations = Array.isArray(rawEntry) && rawEntry.length > 0\n    ? rawEntry\n    : [rawEntry];\n\n  const cleanEmail = (r.Verified_Email && r.Verified_Email !== 'None') ? r.Verified_Email : '';\n  const cleanEmailType = (cleanEmail && r.Email_Type && r.Email_Type !== 'None') ? r.Email_Type : '';\n  const pixels = (r.Ad_Pixels && r.Ad_Pixels !== 'None') ? r.Ad_Pixels : 'None Detected';\n\n  const matchedAds = AD_SIGNALS.filter(sig => pixels.toLowerCase().includes(sig.toLowerCase()));\n  const hasAds = matchedAds.length > 0;\n  const adSummary = matchedAds.join(' & ');\n  const intentTier = hasAds ? '🔥 High Intent (Running Ads)' : 'Standard Outbound';\n\n  const rawDm = (r.Decision_Maker && r.Decision_Maker !== 'None')\n    ? String(r.Decision_Maker).replace(/^(?:Dr\\.?|Mr\\.?|Ms\\.?|Mrs\\.?)\\s+/i, '').trim()\n    : '';\n  const dmName = rawDm ? rawDm.split(/\\s+/)[0] : 'there';\n\n  for (const sheetOrig of locations) {\n    const finalWebsite = sheetOrig.originalWebsite || r.Website || '';\n    const key = `${finalWebsite.toLowerCase()}|${(sheetOrig.Company_Name || '').toLowerCase()}|${sheetOrig.Phone || ''}|${cleanEmail.toLowerCase()}`;\n    if (seen.has(key)) continue;\n    seen.add(key);\n\n    const companyName = sheetOrig.Company_Name || r.Company_Name || '';\n    const cityState = sheetOrig.City_State || cfg['location (city; state)'] || r.City_State || '';\n    const phone = sheetOrig.Phone || r.Phone || '';\n    const defaultHook = hasAds\n      ? `Hi ${dmName}, saw ${companyName || 'your team'} is actively running ${adSummary} campaigns in ${cityState} and wanted to reach out.`\n      : `Hi ${dmName}, came across ${companyName || 'your practice'} in ${cityState} while researching top ${cfg.category} providers.`;\n\n    deduped.push({\n      json: {\n        Company_Name: companyName,\n        Decision_Maker: (r.Decision_Maker && r.Decision_Maker !== 'None') ? r.Decision_Maker : '',\n        Job_Title: (r.Job_Title && r.Job_Title !== 'None') ? r.Job_Title : '',\n        Verified_Email: cleanEmail,\n        Email_Type: cleanEmailType,\n        Phone: phone,\n        LinkedIn_Profile: (r.LinkedIn_Profile && r.LinkedIn_Profile !== 'None') ? r.LinkedIn_Profile : '',\n        Website: finalWebsite,\n        City_State: cityState,\n        Ad_Pixels: pixels,\n        Intent_Tier: intentTier,\n        Cold_Email_Icebreaker: defaultHook,\n        Contact_Form_URL: (r.Contact_Form_URL && r.Contact_Form_URL !== 'None') ? r.Contact_Form_URL : '',\n        Instagram_URL: (r.Instagram_URL && r.Instagram_URL !== 'None') ? r.Instagram_URL : ''\n      }\n    });\n  }\n}\n\nif (deduped.length === 0) {\n  return [{\n    json: {\n      _isEmpty: true,\n      summaryText: `⚠️ Weekly Lead Run [mode=${batchMeta.runMode}]: 0 leads returned (existing queued: ${batchMeta.existingQueuedCount || 0}, new Maps queued: ${batchMeta.newMapsQueuedCount || 0}, skipped existing: ${batchMeta.skippedExisting || 0}).`\n    }\n  }];\n}\nreturn deduped;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2016,
+        -432
+      ],
+      "id": "28ece6bc-c5e1-4ce3-b772-7947ae4c8563",
+      "name": "Deduplicate, Score Intent & Check Empty"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4cd6bba0-6c3e-4924-aa09-0320ccbe9c03",
+              "leftValue": "={{ Boolean($json._isEmpty) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2240,
+        -432
+      ],
+      "id": "8855dce1-64bc-48d0-9dcd-4fbdf41576ca",
+      "name": "Any verified leads returned?"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "id"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Write a 1-sentence personalized B2B cold email icebreaker for {{ $json.Decision_Maker || 'the team' }}{{ $json.Job_Title ? ` (${$json.Job_Title})` : '' }} at {{ $json.Company_Name }} in {{ $json.City_State }}. {{ ($json.Intent_Tier && $json.Intent_Tier.includes('High Intent')) ? `Mention that they are actively running ${$json.Ad_Pixels.split(',').map(s => s.trim()).filter(s => /meta|google|tiktok/i.test(s)).join(' & ')} campaigns.` : `Mention their strong local reputation as a ${$('Config').first().json.category} provider.` }} Keep it under 22 words, no quotes."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        2464,
+        -352
+      ],
+      "id": "34dccd7a-e8f4-41d3-a49c-be086852f48a",
+      "name": "AI Cold Email Icebreaker",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const expectedHeaders = [\n  \"Company_Name\", \"Decision_Maker\", \"Job_Title\", \"Verified_Email\",\n  \"Email_Type\", \"Phone\", \"LinkedIn_Profile\", \"Website\", \"City_State\",\n  \"Ad_Pixels\", \"Intent_Tier\", \"Cold_Email_Icebreaker\", \"Contact_Form_URL\", \"Instagram_URL\"\n];\n\nconst rawValues = $input.first()?.json?.values;\nconst currentHeaders = (Array.isArray(rawValues) && Array.isArray(rawValues[0]))\n  ? rawValues[0].map(h => String(h || '').trim())\n  : [];\n\nif (currentHeaders.length === 0 || currentHeaders.every(h => h === '')) {\n  return [{\n    json: {\n      action: 'WRITE_HEADERS',\n      statusMessage: 'Sheet is blank. Writing 14 canonical headers to Row 1.',\n      headersToWrite: expectedHeaders\n    }\n  }];\n}\n\nif (expectedHeaders.every(h => currentHeaders.includes(h))) {\n  return [{\n    json: {\n      action: 'PROCEED',\n      statusMessage: 'Headers already match all 14 canonical schema columns.',\n      headersToWrite: currentHeaders\n    }\n  }];\n}\n\nconst normalize = (str) => String(str || '').toLowerCase().replace(/[^a-z0-9]/g, '');\nconst aliasMap = {\n  title: \"Company_Name\",\n  name: \"Company_Name\",\n  company: \"Company_Name\",\n  companyname: \"Company_Name\",\n  website: \"Website\",\n  websiteurl: \"Website\",\n  domain: \"Website\",\n  phone: \"Phone\",\n  phonenumber: \"Phone\",\n  city: \"City_State\",\n  citystate: \"City_State\"\n};\nfor (const exp of expectedHeaders) {\n  aliasMap[normalize(exp)] = exp;\n}\n\nconst usedCanonical = new Set();\nlet changed = false;\n\nconst updatedHeaders = currentHeaders.map((origH) => {\n  const mapped = aliasMap[normalize(origH)];\n  if (mapped && !usedCanonical.has(mapped)) {\n    usedCanonical.add(mapped);\n    if (origH !== mapped) changed = true;\n    return mapped;\n  }\n  return origH;\n});\n\nif (!usedCanonical.has(\"Website\")) {\n  return [{\n    json: {\n      action: 'DECLINE',\n      statusMessage: '❌ Sheet schema mismatch! Missing core Website/website column.',\n      headersToWrite: expectedHeaders\n    }\n  }];\n}\n\nfor (const exp of expectedHeaders) {\n  if (!usedCanonical.has(exp)) {\n    updatedHeaders.push(exp);\n    usedCanonical.add(exp);\n    changed = true;\n  }\n}\n\nreturn [{\n  json: {\n    action: changed ? 'WRITE_HEADERS' : 'PROCEED',\n    statusMessage: 'Renamed original sheet headers in-place and appended missing canonical columns.',\n    headersToWrite: updatedHeaders\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3264,
+        -288
+      ],
+      "id": "37454c7a-b97d-4088-9e2a-52dfdc47111a",
+      "name": "Validate Sheet Schema"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9a69129d-b011-468d-8437-8be4cf049a08",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "PROCEED",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3488,
+        -288
+      ],
+      "id": "76f3a9c2-b211-4d73-9a8b-e8e4b141f23f",
+      "name": "Headers Valid?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a9ad77a8-7f9c-4901-b350-d4dc69705ce0",
+              "leftValue": "={{ $json.action}}",
+              "rightValue": "WRITE_HEADERS",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3712,
+        -208
+      ],
+      "id": "b6c22952-91a7-4674-b926-0c895b9c3366",
+      "name": "Is Sheet empty?"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://sheets.googleapis.com/v4/spreadsheets/{{ $('Config').first().json.sheet_document_id }}/values/{{ encodeURIComponent(\"'\" + String($('Config').first().json.sheet_name || 'Sheet1').replace(/'/g, \"''\") + \"'\") }}!1:1?valueInputOption=USER_ENTERED",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ values: [ $('Validate Sheet Schema').first().json.headersToWrite ] }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        3936,
+        -304
+      ],
+      "id": "767323f0-85cc-41bd-9551-bfa3653223f3",
+      "name": "Auto Create Headers",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NHxHcoUBnKklWg2D",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Config').first().json.alert_email }}",
+        "subject": "Your specified sheet has bad schema",
+        "emailType": "text",
+        "message": "=Hello,\n\nThe automated n8n B2B Lead Pipeline encountered a critical schema validation error on your target Google Sheet.\n\nStatus Details: {{ $('Validate Sheet Schema').first().json.statusMessage }}\nSheet Document ID: {{ $('Config').first().json.sheet_document_id }}\nTab Name: {{ $('Config').first().json.sheet_name }}\n\nPlease check your Google Sheet headers to ensure a Website (or website) column is present in Row 1, or provide a blank sheet.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3936,
+        -112
+      ],
+      "id": "376c5a5c-9987-478b-842e-2a60b1cb5f4e",
+      "name": "Bad Schema Email",
+      "webhookId": "af26b25e-44cf-4f40-a5ce-07a775100606",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "hG0TcjPYPGyXTaey",
+          "name": "Gmail account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        4160,
+        -448
+      ],
+      "id": "bbc31c41-8408-44a6-8fbb-b25ca8e6acd5",
+      "name": "Merge: Hold leads until verification"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2f5f5b88-19d5-424f-8da0-11c5241a9c5b",
+              "leftValue": "={{ $json.Verified_Email }}",
+              "rightValue": "@",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        4384,
+        -448
+      ],
+      "id": "8bba0544-6602-40c8-9734-dc53c138d3c2",
+      "name": "Has verified email?"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Config').first().json.sheet_document_id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Config').first().json.sheet_name }}",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "Website"
+          ],
+          "schema": [
+            {
+              "id": "Company_Name",
+              "displayName": "Company_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "totalScore",
+              "displayName": "totalScore",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "reviewsCount",
+              "displayName": "reviewsCount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "street",
+              "displayName": "street",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "City_State",
+              "displayName": "City_State",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "countryCode",
+              "displayName": "countryCode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Website",
+              "displayName": "Website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "categories",
+              "displayName": "categories",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "categoryName",
+              "displayName": "categoryName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Decision_Maker",
+              "displayName": "Decision_Maker",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Job_Title",
+              "displayName": "Job_Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Verified_Email",
+              "displayName": "Verified_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email_Type",
+              "displayName": "Email_Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LinkedIn_Profile",
+              "displayName": "LinkedIn_Profile",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ad_Pixels",
+              "displayName": "Ad_Pixels",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Intent_Tier",
+              "displayName": "Intent_Tier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Cold_Email_Icebreaker",
+              "displayName": "Cold_Email_Icebreaker",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Contact_Form_URL",
+              "displayName": "Contact_Form_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Instagram_URL",
+              "displayName": "Instagram_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        4608,
+        -544
+      ],
+      "id": "19ae56de-7fef-45ee-9327-5bd6d1f026dd",
+      "name": "Upsert email leads to sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NHxHcoUBnKklWg2D",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Config').first().json.sheet_document_id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Config').first().json.sheet_name }}",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "Website"
+          ],
+          "schema": [
+            {
+              "id": "Company_Name",
+              "displayName": "Company_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "totalScore",
+              "displayName": "totalScore",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "reviewsCount",
+              "displayName": "reviewsCount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "street",
+              "displayName": "street",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "City_State",
+              "displayName": "City_State",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "countryCode",
+              "displayName": "countryCode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Website",
+              "displayName": "Website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "categories",
+              "displayName": "categories",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "categoryName",
+              "displayName": "categoryName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Decision_Maker",
+              "displayName": "Decision_Maker",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Job_Title",
+              "displayName": "Job_Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Verified_Email",
+              "displayName": "Verified_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email_Type",
+              "displayName": "Email_Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LinkedIn_Profile",
+              "displayName": "LinkedIn_Profile",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ad_Pixels",
+              "displayName": "Ad_Pixels",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Intent_Tier",
+              "displayName": "Intent_Tier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Cold_Email_Icebreaker",
+              "displayName": "Cold_Email_Icebreaker",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Contact_Form_URL",
+              "displayName": "Contact_Form_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Instagram_URL",
+              "displayName": "Instagram_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        4608,
+        -352
+      ],
+      "id": "1ba82c7a-2271-4d77-be28-93a8584666d1",
+      "name": "Upsert phone/social leads to sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NHxHcoUBnKklWg2D",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const state = $getWorkflowStaticData('global');\nif (state.lastSummaryExecId === $execution.id) {\n  return [];\n}\nstate.lastSummaryExecId = $execution.id;\n\nconst cfg = $('Config').first().json;\nconst batchMeta = $('Filter, Clamp, & Suppress existing domains').first().json;\n\nif ($('Validate Sheet Schema').isExecuted && $('Validate Sheet Schema').first().json.action === 'DECLINE') {\n  const errMsg = $('Validate Sheet Schema').first().json.statusMessage;\n  return [{\n    json: {\n      runMode: batchMeta.runMode || 'both',\n      summaryText: `❌ Weekly Lead Run Aborted: ${errMsg}`,\n      totalLeads: 0,\n      existingSheetEnriched: 0,\n      newMapsScrapedAndEnriched: 0,\n      verifiedEmails: 0,\n      decisionMakers: 0,\n      highIntentCount: 0,\n      skippedExisting: batchMeta.skippedExisting || 0,\n      emailHitRatePct: '0%',\n      estCostUsd: '$0.00'\n    }\n  }];\n}\n\nlet rows = $input.all().map(i => i.json);\ntry {\n  if ($('Merge: Hold leads until verification').isExecuted) {\n    const mergedLeads = $('Merge: Hold leads until verification').all().map(i => i.json);\n    if (mergedLeads.length > 0) rows = mergedLeads;\n  }\n} catch (e) {}\n\nif (rows.length === 1 && (rows[0]._isEmpty || rows[0].maxLeads === 0)) {\n  const msg = rows[0].summaryText || `⚠️ Weekly Lead Run [mode=${batchMeta.runMode || 'both'}] (${cfg.category} in ${cfg['location (city; state)']}): 0 domains to enrich (skipped ${batchMeta.skippedExisting || 0} already-enriched domains).`;\n  return [{\n    json: {\n      runMode: batchMeta.runMode || 'both',\n      summaryText: msg,\n      totalLeads: 0,\n      existingSheetEnriched: 0,\n      newMapsScrapedAndEnriched: 0,\n      verifiedEmails: 0,\n      decisionMakers: 0,\n      highIntentCount: 0,\n      skippedExisting: batchMeta.skippedExisting || 0,\n      emailHitRatePct: '0%',\n      estCostUsd: '$0.00'\n    }\n  }];\n}\n\nconst total = rows.length;\nconst emails = rows.filter(r => r.Verified_Email && r.Verified_Email.includes('@')).length;\nconst dms = rows.filter(r => r.Decision_Maker && r.Decision_Maker !== '').length;\nconst highIntent = rows.filter(r => String(r.Intent_Tier || '').includes('High Intent')).length;\nconst pct = total > 0 ? Math.round((emails / total) * 100) : 0;\n\n// Calculate PPE cost strictly from unique enriched domains returned by Apify (not fanned-out sheet rows)\nconst apifyItems = $('Enrich Leads').isExecuted ? $('Enrich Leads').all().map(i => i.json) : [];\nconst billedDomains = apifyItems.length;\nconst billedPhones = apifyItems.filter(r => r.Phone && r.Phone !== 'None' && r.Phone !== '').length;\nconst billedDms = apifyItems.filter(r => r.Decision_Maker && r.Decision_Maker !== 'None' && r.Decision_Maker !== '').length;\nconst billedEmails = apifyItems.filter(r => r.Verified_Email && r.Verified_Email.includes('@')).length;\n\nconst estCost = billedDomains > 0\n  ? (0.05 + billedDomains * 0.01 + billedPhones * 0.005 + billedDms * 0.01 + billedEmails * 0.01).toFixed(2)\n  : '0.00';\n\nreturn [{\n  json: {\n    runMode: batchMeta.runMode || 'both',\n    totalLeads: total,\n    existingSheetEnriched: batchMeta.existingQueuedCount || 0,\n    newMapsScrapedAndEnriched: batchMeta.newMapsQueuedCount || 0,\n    verifiedEmails: emails,\n    decisionMakers: dms,\n    highIntentCount: highIntent,\n    skippedExisting: batchMeta.skippedExisting || 0,\n    emailHitRatePct: `${pct}%`,\n    estCostUsd: `$${estCost}`,\n    summaryText: `✅ Weekly Lead Run [mode=${batchMeta.runMode || 'both'}] (${cfg.category} in ${cfg['location (city; state)']}): ${total} sheet rows updated (${batchMeta.existingQueuedCount || 0} existing domains + ${batchMeta.newMapsQueuedCount || 0} new Maps domains), ${dms} decision-makers, ${emails} verified emails (${pct}%), ${highIntent} running ads (~$${estCost} est. PPE cost)${batchMeta.clampNote || ''}.`\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4832,
+        -688
+      ],
+      "id": "28b51c9b-5de3-45a7-a0ec-f5abeb1a5d39",
+      "name": "Build weekly summary",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3efd50ce-68a2-41dd-821a-f373f5dc65ad",
+              "leftValue": "={{ $('Config').first().json.summaryWebhookURL }}",
+              "rightValue": "http",
+              "operator": {
+                "type": "string",
+                "operation": "startsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        5056,
+        -688
+      ],
+      "id": "b2d3e551-a2c8-4811-8d6b-35f722f021e9",
+      "name": "Has valid webhook"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.summaryWebhookURL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: $json.summaryText, total_leads: $json.totalLeads, verified_emails: $json.verifiedEmails, high_intent_count: $json.highIntentCount, estimated_cost_usd: $json.estCostUsd, timestamp: new Date().toISOString() }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        5280,
+        -688
+      ],
+      "id": "56b71092-3a55-4806-871a-66027da78eb4",
+      "name": "Send summary to webhook"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "daysInterval": 7,
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        -496
+      ],
+      "id": "050408ab-f3ee-4a21-b6dc-f0392d4ac0bb",
+      "name": "Schedule every 7 days at 6am"
+    },
+    {
+      "parameters": {
+        "jsCode": "const originalLeads = $('Deduplicate, Score Intent & Check Empty').all();\nconst aiOutputs = $input.all();\n\nconst aiByLeadIdx = {};\naiOutputs.forEach((item, idx) => {\n  const pIdx = item.pairedItem?.item ?? idx;\n  aiByLeadIdx[pIdx] = item.json || {};\n});\n\nreturn originalLeads.map((leadItem, idx) => {\n  const aiJson = aiByLeadIdx[idx] || {};\n  const rawOutput = typeof aiJson.output === 'string'\n    ? aiJson.output\n    : (aiJson?.output?.[0]?.content?.[0]?.text || aiJson?.message?.content || aiJson?.text || aiJson?.content || '');\n  const aiText = String(rawOutput || '').trim().replace(/^[\"'“”‘’]+|[\"'“”‘’]+$/g, '').trim();\n\n  return {\n    json: {\n      ...leadItem.json,\n      Cold_Email_Icebreaker: aiText || leadItem.json.Cold_Email_Icebreaker\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2816,
+        -352
+      ],
+      "id": "518da3c0-ab96-45ea-95de-b7a1c5c0acf0",
+      "name": "Merge AI Icebreaker with Lead Data"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "23c3ea1a-cd3a-4eea-b77e-d9d60aee54b2",
+              "leftValue": "={{ String($('Config').first().json.run_mode || 'both').trim().toLowerCase() }}",
+              "rightValue": "enrich_existing",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        672,
+        -496
+      ],
+      "id": "6c4c25dd-e9b4-4a93-9720-93607c368018",
+      "name": "Should Scrape Google Maps"
+    },
+    {
+      "parameters": {
+        "content": "📅 Weekly Google Maps Leads → Verified Emails → AI Icebreakers → Google Sheets\n\nPowered by: amitabh_312/b2b-website-decision-maker-email-enricher + Apify's Google Maps Scraper\n\nWhat your Sheet gets, automatically: Decision Maker · Job Title · Verified Email (+ type) · Phone · LinkedIn · Ad Pixels · 🔥 Intent Tier · AI Icebreaker · Contact Form · Instagram\n\n🚀 Setup in 5 steps (~5 minutes)\n\nGoogle Sheet: create a blank sheet, or paste a raw Google Maps export. Copy the ID from the URL (the part between /d/ and /edit).\n\nApify API credential → Scrape Google Maps and Enrich Leads.\n\nGoogle Sheets OAuth2 credential → Fetch Existing Sheets Leads, Read Sheet Headers, Auto Create Headers, Upsert email leads to sheet, Upsert phone/social leads to sheet.\n\nOptional: OpenAI credential in AI Cold Email Icebreaker (skip it and the rule-based icebreaker is kept) · Gmail OAuth2 in Bad Schema Email (alerts you if the sheet is unusable).\n\nFill in every field in Config, click Execute workflow once with max_leads = 10 as a test, then Activate. It runs every 7 days at 6am.\n\n⚙️ Config fields\n\nrun_mode · location (city; state) e.g. Austin, TX · category e.g. Med Spa · max_leads (a number) · sheet_document_id · sheet_name · alert_email · summaryWebhookURL (optional Slack/Discord/Make URL, blank = skip)\n\n🎛️ run_mode\n\nboth (default): enrich every un-enriched row already in your sheet and scrape up to max_leads NEW places\n\nscrape_new: scrape up to max_leads new places only, existing rows are left alone\n\nenrich_existing: no scraping, enrich every un-enriched row in the sheet (max_leads is ignored)",
+        "height": 608,
+        "width": 1184,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        -1296
+      ],
+      "id": "ca97fb2d-2029-4069-abeb-f58b86fad558",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "Trigger & Config\n\nRuns every 7 days at 6am, or click Execute workflow any time.\n\nEdit the 8 values in Config, nothing else needs touching\n\nmax_leads only limits NEW Google Maps places. Rows already in your sheet are always all enriched",
+        "height": 384,
+        "width": 448,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        -688
+      ],
+      "id": "f3762368-6fbc-4380-bf20-15b6040372b7",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# ⚙️ n8n Workflow Config Variables Reference Guide\n\nUse this reference guide to understand what each variable in your `Config` node controls and how to set them correctly.\n\n---\n\n### 1. `run_mode`\n* **Description:** Controls the execution behavior of the pipeline for the current run.\n* **Accepted Values:** \n  * `both` (Default) — Enriches un-enriched rows already in your sheet **and** scrapes up to `max_leads` new places.\n  * `scrape_new` — Scrapes up to `max_leads` new places from Google Maps only; existing sheet rows are ignored.\n  * `enrich_existing` — Skips Google Maps scraping entirely and only enriches un-enriched rows already present in the sheet (`max_leads` is ignored).\n\n---\n\n### 2. `location (city; state)`\n* **Description:** The geographical search target for the Google Maps scraper.\n* **Format Example:** `Austin, TX` or `Chicago, IL`. \n* *Note:* Use only one location per workflow run.\n\n---\n\n### 3. `category`\n* **Description:** The target business type, niche, or keyword you want to search for on Google Maps.\n* **Format Example:** `Med Spa`, `Roofing Contractor`, or `Dentist`.\n\n---\n\n### 4. `max_leads`\n* **Description:** The maximum number of **new** Google Maps places to extract and process per run. \n* *Note:* Capped at a maximum safety limit of 2,000. Start with a small number like `100` when testing your workflow.\n\n---\n\n### 5. `sheet_document_id`\n* **Description:** The unique alphanumeric identifier of your Google Sheet.\n* *Where to find it:* Copy it directly from your Google Sheet browser URL (the long string of characters located between `/d/` and `/edit`).\n\n---\n\n### 6. `sheet_name`\n* **Description:** The exact name of the specific worksheet tab where leads will be read from and upserted into.\n* **Default Value:** `Sheet1`\n\n---\n\n### 7. `alert_email`\n* **Description:** The destination email address that receives a notification alert if a critical error occurs (such as a Google Sheet schema validation failure).\n\n---\n\n### 8. `summaryWebhookURL`\n* **Description:** An optional incoming webhook endpoint URL (such as a Slack, Discord, or Make integration URL) to post the run execution summary.\n* *Note:* Leave this field blank if you do not wish to use webhook notifications.",
+        "height": 1344,
+        "width": 912,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        -256
+      ],
+      "id": "d9275e3e-1780-464c-b5b8-cba68fd77753",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCollect & Select: what gets enriched this run\n\nFetch Existing Sheets Leads: reads every row currently in your sheet\n\nShould Scrape Google Maps: skipped entirely in enrich_existing mode\n\nScrape Google Maps: finds up to max_leads places for your category in your location (one location per run)\n\nFilter: Has Website?: drops listings with no website\n\nFilter, Clamp, & Suppress existing domains: builds the queue\n\nall un-enriched sheet rows (up to 2,000 per batch) + new Maps leads (up to max_leads)\n\nskips rows that already have a Verified_Email, Decision_Maker, Intent_Tier or Icebreaker, so nothing is paid for twice\n\nignores social and booking-platform links (facebook, instagram, yelp, linktr.ee, tiktok, google, squareup, vagaro, heygoldie, skinclique)\n\ngroups multi-location chains by domain so every branch row gets filled\n\nAny new domains to enrich?: nothing queued → jumps straight to the summary\n\n💡 To re-enrich a row: clear its Decision_Maker → Instagram_URL cells and run again.",
+        "height": 816,
+        "width": 848,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        832,
+        -592
+      ],
+      "id": "6dc58cb4-e8c8-442f-ae93-32e6164d4292",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 352,
+        "width": 448,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        384,
+        -592
+      ],
+      "id": "a3c3f219-5b82-4885-baa3-c42612aa55c2",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "Enrich & Score\n\nEnrich Leads: sends each site with its company name, city and phone to amitabh_312/b2b-website-decision-maker-email-enricher. It reads the site (contact, about and team pages), finds the owner or decision maker, builds and verifies their direct email, and detects ad pixels, contact form and Instagram. Retries automatically on failure\n\nDeduplicate, Score Intent & Check Empty: copies the result to every sheet row that shares the domain, tags 🔥 High Intent (Running Ads) when a Meta / Google / TikTok pixel is found (otherwise Standard Outbound), and writes a fallback icebreaker\n\nAny verified leads returned?: empty result → straight to the summary\n\nAI Cold Email Icebreaker → Merge: gpt-4o-mini writes one personalised line (under 22 words); if the AI returns nothing, the fallback line stays",
+        "height": 608,
+        "width": 1232,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        -688
+      ],
+      "id": "d6923fe5-5483-4345-918b-caa5117044c0",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSelf-Healing Sheet Schema\n\nRead Sheet Headers → Validate Sheet Schema inspect Row 1 (A1:Z2) before anything is written:\n\nBlank sheet: writes all 14 headers\n\nRaw Google Maps export: renames title → Company_Name, website → Website, phone → Phone, city → City_State in place, then adds the missing enrichment columns after them\n\nAlready correct: goes straight through\n\nNo website column at all: Bad Schema Email alerts alert_email\n\nYour original Google Maps columns and rows are never moved or deleted",
+        "height": 800,
+        "width": 1152
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2928,
+        -512
+      ],
+      "id": "2a79cbec-2788-4008-a3c1-7127e10df8fa",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSplit & Write Back\n\nMerge: holds the leads until the headers are confirmed valid\n\nHas verified email?\n\nYes → Upsert email leads to sheet\n\nNo → Upsert phone/social leads to sheet (leads with a phone, LinkedIn, contact form or Instagram but no email, so you can still reach them)\n\nBoth upserts match on Website, so enriched data lands on the exact original row. Only brand-new leads are appended at the bottom",
+        "height": 800,
+        "width": 672,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4080,
+        -528
+      ],
+      "id": "ac062412-746a-4538-9a34-6939cde45cf9",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "Weekly Summary\n\nCounts leads, decision makers, verified emails (+ hit rate), high-intent leads and an estimated cost. Posts it to summaryWebhookURL (Slack / Discord / Make) if you set one. Leave it blank to skip.",
+        "height": 352,
+        "width": 784,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4720,
+        -880
+      ],
+      "id": "5a6ca70f-5a46-4171-9684-c9dee384d14b",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "💰 Cost & Limits\n\nEnrichment is pay-per-result on Apify: $0.05 per run start, then $0.01 per lead, plus $0.005 phone, $0.01 decision maker and $0.01 verified email, charged only for what is actually found\n\nThe Google Maps scraper is billed separately by Apify\n\nBuild weekly summary shows an estimate (about $0.03 per lead), not an invoice. Check Apify Console for the real figure\n\nTip: set a Maximum cost per run in Apify to cap spend\n\nStart with max_leads set to some small number to test",
+        "height": 272,
+        "width": 1328
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        736,
+        -1024
+      ],
+      "id": "1d741e90-6685-4c5d-a69f-28c90c35df30",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "# 🛠️ Troubleshooting\n\nConfig shows an error / empty fields: every Config field must be filled, and max_leads must be a number\n\nRows appended at the bottom instead of updated: the Website column must exist (the first run renames website for you) and its values must not be edited\n\n\"0 domains to enrich\": every row already has an email, decision maker, intent tier or icebreaker, or the site is a social / booking link. Clear those cells to re-run\n\nSome rows come back blank: not every small business publishes its owner online. The summary shows the email hit rate each run\n\nBad Schema Email arrives: Row 1 has no Website column. Fix the header and re-run\n\nRun stops early: check your Apify credit balance and the run's Maximum cost per run\n\nNo OpenAI credential: fine, the rule-based icebreaker is used",
+        "height": 448,
+        "width": 608,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -688,
+        -640
+      ],
+      "id": "77fba420-3d22-4e5b-81f5-5fa9dd7b84cd",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "\n@[youtube](JIFyaEh-wvk)",
+        "height": 1120,
+        "width": 1872
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        816,
+        256
+      ],
+      "id": "8b205bbe-ce27-41e6-9f20-9ad3daa27d15",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.sheet_document_id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $json.sheet_name }}",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        -496
+      ],
+      "id": "d971144d-8d84-4b76-825f-860debe5cc87",
+      "name": "Fetch Existing Sheets Leads",
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NHxHcoUBnKklWg2D",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://sheets.googleapis.com/v4/spreadsheets/{{ $('Config').first().json.sheet_document_id }}/values/{{ encodeURIComponent(\"'\" + String($('Config').first().json.sheet_name || 'Sheet1').replace(/'/g, \"''\") + \"'\") }}!1:1",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        3040,
+        -288
+      ],
+      "id": "0f3e2dcb-b67c-40a2-88ee-d9d64af7ad1a",
+      "name": "Read Sheet Headers",
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NHxHcoUBnKklWg2D",
+          "name": "Google Sheets account 3"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Fetch Existing Sheets Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape Google Maps": {
+      "main": [
+        [
+          {
+            "node": "Filter: Has Website?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: Has Website?": {
+      "main": [
+        [
+          {
+            "node": "Filter, Clamp, & Suppress existing domains",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter, Clamp, & Suppress existing domains": {
+      "main": [
+        [
+          {
+            "node": "Any new domains to enrich?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Any new domains to enrich?": {
+      "main": [
+        [
+          {
+            "node": "Enrich Leads",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build weekly summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enrich Leads": {
+      "main": [
+        [
+          {
+            "node": "Deduplicate, Score Intent & Check Empty",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deduplicate, Score Intent & Check Empty": {
+      "main": [
+        [
+          {
+            "node": "Any verified leads returned?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Any verified leads returned?": {
+      "main": [
+        [
+          {
+            "node": "AI Cold Email Icebreaker",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build weekly summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Cold Email Icebreaker": {
+      "main": [
+        [
+          {
+            "node": "Merge AI Icebreaker with Lead Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Sheet Schema": {
+      "main": [
+        [
+          {
+            "node": "Headers Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Headers Valid?": {
+      "main": [
+        [
+          {
+            "node": "Merge: Hold leads until verification",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Is Sheet empty?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Sheet empty?": {
+      "main": [
+        [
+          {
+            "node": "Auto Create Headers",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Bad Schema Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge: Hold leads until verification": {
+      "main": [
+        [
+          {
+            "node": "Has verified email?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has verified email?": {
+      "main": [
+        [
+          {
+            "node": "Upsert email leads to sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Upsert phone/social leads to sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert phone/social leads to sheet": {
+      "main": [
+        [
+          {
+            "node": "Build weekly summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert email leads to sheet": {
+      "main": [
+        [
+          {
+            "node": "Build weekly summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build weekly summary": {
+      "main": [
+        [
+          {
+            "node": "Has valid webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has valid webhook": {
+      "main": [
+        [
+          {
+            "node": "Send summary to webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule every 7 days at 6am": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto Create Headers": {
+      "main": [
+        [
+          {
+            "node": "Merge: Hold leads until verification",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Bad Schema Email": {
+      "main": [
+        [
+          {
+            "node": "Build weekly summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge AI Icebreaker with Lead Data": {
+      "main": [
+        [
+          {
+            "node": "Merge: Hold leads until verification",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Read Sheet Headers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Should Scrape Google Maps": {
+      "main": [
+        [
+          {
+            "node": "Scrape Google Maps",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Filter, Clamp, & Suppress existing domains",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Existing Sheets Leads": {
+      "main": [
+        [
+          {
+            "node": "Should Scrape Google Maps",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Sheet Headers": {
+      "main": [
+        [
+          {
+            "node": "Validate Sheet Schema",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "323638db-8c88-4db3-b72a-f4e52f6b91d7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "65fd0ce64e8b858f11f0808ee323e846035809c822ce3f3190a2b7f0d51d6126"
+  },
+  "id": "gnXrKvYaE48yNfrX",
+  "tags": []
+}
