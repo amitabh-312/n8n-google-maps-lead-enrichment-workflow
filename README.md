@@ -1,6 +1,6 @@
 # 🚀 Automated Google Maps B2B Lead Generation, Decision-Maker Email Enricher & AI Icebreakers (n8n + Apify + Google Sheets)
 
-[![n8n Workflow](https://img.shields.io/badge/n8n-Workflow_Template-FF6D5A?style=for-the-badge&logo=n8n&logoColor=white)](./Weekly%20Google%20Maps%20Leads%20with%20Verified%20Emails%20%26%20AI%20Icebreakers%20to%20Google%20Sheets%20(Apify).json)
+[![n8n Workflow](https://img.shields.io/badge/n8n-Workflow_Template-FF6D5A?style=for-the-badge&logo=n8n&logoColor=white)](./Weekly%20Google%20Maps%20Leads%20with%20Verified%20Emails%20%26%20AI%20Icebreakers%20to%20Google%20Sheets%20(Apify)(15).json)
 [![Apify Actor](https://img.shields.io/badge/Apify-B2B_Decision_Maker_Enricher-00C853?style=for-the-badge&logo=apify&logoColor=white)](https://apify.com/amitabh_312/b2b-website-decision-maker-email-enricher)
 [![YouTube Demo](https://img.shields.io/badge/YouTube-Watch_5_Min_Walkthrough-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=JIFyaEh-wvk)
 
@@ -80,7 +80,7 @@ If a local chain has multiple branches in your Google Sheet sharing the same roo
 ## 🛠️ Quick Setup Guide (5 Minutes)
 
 ### Step 1: Import the Workflow into n8n
-1. Download [`Weekly Google Maps Leads with Verified Emails & AI Icebreakers to Google Sheets (Apify).json`](./Weekly%20Google%20Maps%20Leads%20with%20Verified%20Emails%20%26%20AI%20Icebreakers%20to%20Google%20Sheets%20(Apify).json) from this repository.
+1. Download [`Weekly Google Maps Leads with Verified Emails & AI Icebreakers to Google Sheets (Apify)(15).json`](./Weekly%20Google%20Maps%20Leads%20with%20Verified%20Emails%20%26%20AI%20Icebreakers%20to%20Google%20Sheets%20(Apify).json) from this repository.
 2. In your n8n canvas, click **`...` (top-right menu)** $\rightarrow$ **Import from File...** and select the downloaded JSON file.
 
 ### Step 2: Connect Your Credentials
